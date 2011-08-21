@@ -6,13 +6,14 @@ class Particle {
   color clr;
   float alpha = 200;
   
-  Particle(int xpos, int ypos, float velx, float vely, float r, color c) {
+  Particle(int xpos, int ypos, float velx, float vely, float r, color c, float g) {
     x = xpos;
     y = ypos;
     vx = velx;
     vy = vely;
     radius = r;
     clr = c;
+    gravity = g;
   }
   
   void update() {

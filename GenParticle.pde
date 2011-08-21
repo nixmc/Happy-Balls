@@ -2,7 +2,7 @@ class GenParticle extends Particle {
   float originX, originY;
   
   GenParticle(int xIn, int yIn, float vxIn, float vyIn, float r, float ox, float oy) {
-    super(xIn, yIn, vxIn, vyIn, r, color(255));
+    super(xIn, yIn, vxIn, vyIn, r, color(255), 0.1);
     originX = ox;
     originY = oy;
   }
