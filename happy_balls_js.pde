@@ -1,6 +1,7 @@
 int numParticles = 5;
 color happy = color(239, 240, 56, 150);
-List<Particle> particles = new ArrayList<Particle>();
+var particles = [];
+//List<Particle> particles = new ArrayList<Particle>();
 ParticleSystem physics;
 float gravity = 9.8 / frameRate;
 float drag = 0.05;
@@ -26,9 +27,12 @@ void setup() {
 }
 
 void draw() {
-  for (Particle particle : particles) {
+//  for (Particle particle : particles) {
+//    handleBoundaryCollisions(particle);
+//  }
+  particles.forEach(function(particle){
     handleBoundaryCollisions(particle);
-  }
+  });
   
   physics.tick();
 
@@ -36,13 +40,17 @@ void draw() {
   
   noStroke();
   fill(happy);
-  for (Particle particle : particles) {
-    ellipse(particle.position.x, particle.position.y, radius * 2, radius * 2);   
-  }
-  
+//  for (Particle particle : particles) {
+//    ellipse(particle.position.x, particle.position.y, radius * 2, radius * 2);
+//  }
+  particles.forEach(function(particle){
+    ellipse(particle.position.x, particle.position.y, radius * 2, radius * 2);
+  });
+
   if (addParticles && frameCount % 5 == 0) {
     initParticle();
-    println("No. of particles: " + particles.size());
+//    println("No. of particles: " + particles.size());
+    println("No. of particles: " + particles.length);
   }
 }
 
@@ -50,10 +58,14 @@ void initParticle() {
   //Particle p = physics.makeParticle(1.0, random(width * 0.25, width * 0.75), -2 * radius, 0);
   Particle p = physics.makeParticle(1.0, width / 2, -2 * radius, 0);
   p.velocity.set(3, 0, 0);
-  for (Particle particle : particles) {
+//  for (Particle particle : particles) {
+//    physics.makeAttraction(particle, p, attractionStrength, attractionMinimumDistance);
+//  }
+  particles.forEach(function(particle){
     physics.makeAttraction(particle, p, attractionStrength, attractionMinimumDistance);
-  }
-  particles.add(p);
+  });
+//  particles.add(p);
+  particles.push(p);
 }
 
 void handleBoundaryCollisions(Particle p) {
