@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>serial</title>
+        <script type="text/javascript" src="lib/processing-1.2.3.min.js"></script>
+        <script type="text/javascript">
+        var serialityCallback = function(data) {
+            var re = /Location: (\d+) happy: (\d+) sad: (\d+)/;
+            var match = re.exec(data);
+            console.log("Received:", data);
+            if (match) {
+                console.log("Location:", match[1]);
+                console.log("Happiness:", match[2]);
+                console.log("Unhappiness:", match[3]);
+            }
+        };
+        </script>
+        
+    </head>
+    <body>
+        <object type="application/seriality" id="seriality" width="0" height="0"></object>
+        <canvas id="serial" data-processing-sources="Seriality.pjs"></canvas>
+    </body>
+</html>

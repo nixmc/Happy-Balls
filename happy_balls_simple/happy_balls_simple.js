@@ -8,7 +8,7 @@ float FRICTION = 0.4;
 // List<LimitedParticle> particles = new ArrayList<LimitedParticle>();
 var particles = [];
 SinkListener sinkListener = new SinkListenerImpl(); 
-boolean addParticles = true;
+boolean addParticles = false;
 int addParticleRate = externals.canvas.id == "happyBucket" ? 5 : 15;
 
 void setup() {
