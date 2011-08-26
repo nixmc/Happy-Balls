@@ -1,7 +1,7 @@
 var db,
     addHappinessScore,
     getHappinessScore,
-    putHappinessScore,
+    putHappinessScore;
 (function() {
     // See IndexedDB primer here: https://developer.mozilla.org/en/IndexedDB/IndexedDB_primer
     var request = mozIndexedDB.open("HappyBalls");

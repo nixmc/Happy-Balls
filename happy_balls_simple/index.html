@@ -33,6 +33,7 @@
     }
     </style>
     <script type="text/javascript" src="lib/processing-1.2.3.min.js"></script>
+    <script type="text/javascript" src="js/db.js"></script>
     <script type="text/javascript">
     var initSketch = function(sketchId) {
         if (!window[sketchId]) {
@@ -43,17 +44,52 @@
     
     var dropBallIntoBucket = function(bucketId) {
         var bucket = initSketch(bucketId);
+        console.log("Dropping ball into:", bucketId);
         bucket.initParticle();
     };
     
     var serialityCallback = function(data) {
         var re = /Location: (\d+) happy: (\d+) sad: (\d+)/;
-        var match = re.exec(data);
         console.log("Received:", data);
+        var match = re.exec(data);
         if (match) {
-            console.log("Location:", match[1]);
-            console.log("Happiness:", match[2]);
-            console.log("Unhappiness:", match[3]);
+            var location = parseInt(match[1]),
+                happiness = parseInt(match[2]),
+                unhappiness = parseInt(match[3]);
+            getHappinessScore(location, {
+                onSuccess: function(ev) {
+                    var result = ev.target.result;
+                    console.log(result);
+                    if (!result || result.happiness < happiness || result.unhappiness < unhappiness) {
+                        // Something's changed
+                        var happinessIncrease = happiness - (result && result.happiness || 0),
+                            unhappinessIncrease = unhappiness - (result && result.unhappiness || 0);
+                        console.log("happinessIncrease:", happinessIncrease);
+                        console.log("unhappinessIncrease:", unhappinessIncrease);
+                        // Record change
+                        putHappinessScore({
+                            location: location,
+                            happiness: happiness,
+                            unhappiness: unhappiness,
+                        }, {
+                            onSuccess: function(ev) {
+                                console.log("Scores updated for location:", location);
+                            },
+                            onError: console.log
+                        });
+                        // Drop appropriate number of balls into buckets...
+                        while (happinessIncrease > 0) {
+                            dropBallIntoBucket("happyBucket");
+                            happinessIncrease--;
+                        }
+                        while (unhappinessIncrease > 0) {
+                            dropBallIntoBucket("unhappyBucket");
+                            unhappinessIncrease--;
+                        }
+                    }
+                },
+                onError: console.log
+            });
         }
     };
     </script>
