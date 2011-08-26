@@ -2,6 +2,12 @@
 <html>
   <head>
     <style type="text/css">
+    #serial-container {
+        position: relative;
+        height: 0;
+        width: 0;
+        left: -99999px;
+    }
     #content {
         width: 1024px;
         margin: auto;
@@ -38,10 +44,25 @@
     var dropBallIntoBucket = function(bucketId) {
         var bucket = initSketch(bucketId);
         bucket.initParticle();
-    };    
+    };
+    
+    var serialityCallback = function(data) {
+        var re = /Location: (\d+) happy: (\d+) sad: (\d+)/;
+        var match = re.exec(data);
+        console.log("Received:", data);
+        if (match) {
+            console.log("Location:", match[1]);
+            console.log("Happiness:", match[2]);
+            console.log("Unhappiness:", match[3]);
+        }
+    };
     </script>
   </head>
   <body>
+    <div id="serial-container">
+        <object type="application/seriality" id="seriality" width="0" height="0"></object>
+        <canvas id="serial" data-processing-sources="Seriality.pjs"></canvas>
+    </div>
     <div id="content">
         <div class="bucket-container">
             <button onclick="dropBallIntoBucket('happyBucket');">Put a ball in the happy bucket! :D</button>
