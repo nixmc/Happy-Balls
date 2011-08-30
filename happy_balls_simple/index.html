@@ -4,10 +4,14 @@
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
     <script type="text/javascript" src="lib/processing-1.2.3.min.js"></script>
 		<script type="text/javascript" src="script/jquery.1.6.2.min.js"></script>
-		<script type="text/javascript" src="script/twitterlib.js"></script>
+		<script type="text/javascript" src="js/db.js"></script>
 		<script type="text/javascript" src="script/init.js"></script>
   </head>
   <body>
+    <div id="serial-container">
+        <object type="application/seriality" id="seriality" width="0" height="0"></object>
+        <canvas id="serial" data-processing-sources="Seriality.pjs"></canvas>
+    </div>
     <div id="content">
 			<div id="processing">
         <div class="bucket-container">
