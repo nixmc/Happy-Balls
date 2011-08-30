@@ -32,6 +32,7 @@
         font-size: 20px;
     }
     </style>
+    <script type="text/javascript" src="lib/jquery/1.5.2/jquery.min.js"></script>
     <script type="text/javascript" src="lib/processing-1.2.3.min.js"></script>
     <script type="text/javascript" src="js/db.js"></script>
     <script type="text/javascript">
@@ -66,7 +67,8 @@
                             unhappinessIncrease = unhappiness - (result && result.unhappiness || 0);
                         console.log("happinessIncrease:", happinessIncrease);
                         console.log("unhappinessIncrease:", unhappinessIncrease);
-                        // Record change
+                        
+                        // Record change...
                         putHappinessScore({
                             location: location,
                             happiness: happiness,
@@ -77,6 +79,14 @@
                             },
                             onError: console.log
                         });
+                        
+                        // Send change to server...
+                        $.post("http://" + document.location.hostname + ":5000/add", {
+                            location: location, 
+                            happiness: happiness, 
+                            unhappiness: unhappiness
+                        });
+                        
                         // Drop appropriate number of balls into buckets...
                         while (happinessIncrease > 0) {
                             dropBallIntoBucket("happyBucket");
