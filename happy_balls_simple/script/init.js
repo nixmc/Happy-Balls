@@ -36,7 +36,7 @@ var zero_pad = function(num,count)
     numZeropad = "0" + numZeropad;
   }
   return numZeropad;
-}
+};
 
 var addChunk = function(happy, sad, time){
   time = time == null ? new Date : time;
@@ -57,10 +57,7 @@ var addChunk = function(happy, sad, time){
   if(happy_percent + sad_percent < chunks_width){
     sad_percent = sad_percent + chunks_width % (happy_percent + sad_percent);
   }
-  
 
-  //var time = new Date;
-  //time.getMinutes();
   if(time.getMinutes){
     time = time.getMinutes();
   }
@@ -81,4 +78,59 @@ var addChunk = function(happy, sad, time){
   }
   $chunks.prepend($new_li);
   $('#chunks li:first').animate({ opacity: 1.0, top: 0 }, 1000);
-}
+};
+
+var serialityCallback = function(data) {
+    var re = /Location: (\d+) happy: (\d+) sad: (\d+)/;
+    console.log("Received:", data);
+    var match = re.exec(data);
+    if (match) {
+        var location = parseInt(match[1]),
+            happiness = parseInt(match[2]),
+            unhappiness = parseInt(match[3]);
+        getHappinessScore(location, {
+            onSuccess: function(ev) {
+                var result = ev.target.result;
+                console.log(result);
+                if (!result || result.happiness < happiness || result.unhappiness < unhappiness) {
+                    // Something's changed
+                    var happinessIncrease = happiness - (result && result.happiness || 0),
+                        unhappinessIncrease = unhappiness - (result && result.unhappiness || 0);
+                    console.log("happinessIncrease:", happinessIncrease);
+                    console.log("unhappinessIncrease:", unhappinessIncrease);
+                    
+                    // Record change...
+                    putHappinessScore({
+                        location: location,
+                        happiness: happiness,
+                        unhappiness: unhappiness,
+                    }, {
+                        onSuccess: function(ev) {
+                            console.log("Scores updated for location:", location);
+                        },
+                        onError: console.log
+                    });
+                    
+                    // Send change to server...
+                    // $ curl -i -d "location=1&happiness=42&unhappiness=0" http://happy-balls.local/server/happiness/
+                    $.post("http://" + document.location.hostname + "/server/happiness/", {
+                        location: location, 
+                        happiness: happinessIncrease, 
+                        unhappiness: unhappinessIncrease
+                    });
+                    
+                    // Drop appropriate number of balls into buckets...
+                    while (happinessIncrease > 0) {
+                        dropBallIntoBucket("happyBucket");
+                        happinessIncrease--;
+                    }
+                    while (unhappinessIncrease > 0) {
+                        dropBallIntoBucket("unhappyBucket");
+                        unhappinessIncrease--;
+                    }
+                }
+            },
+            onError: console.log
+        });
+    }
+};
