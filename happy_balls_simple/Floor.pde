@@ -1,5 +1,5 @@
 static class Floor {
-  static float y = 500;
+  static float y = 300;
   static float linesPerBall = 1;
   static float ballsConsumed = 0;
   

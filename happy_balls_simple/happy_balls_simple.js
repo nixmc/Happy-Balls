@@ -8,17 +8,17 @@ float FRICTION = 0.4;
 // List<LimitedParticle> particles = new ArrayList<LimitedParticle>();
 var particles = [];
 SinkListener sinkListener = new SinkListenerImpl(); 
-boolean addParticles = true;
+boolean addParticles = false;
 int addParticleRate = externals.canvas.id == "happyBucket" ? 5 : 15;
 
 void setup() {
-  size(500, 500);
+  size(280, 300);
   noStroke();
   smooth();
   for (int i = 0; i < num; i++) {
     initParticle();
   }
-  println("Running on:  " + externals.canvas.id);
+  //println("Running on:  " + externals.canvas.id);
 }
 
 void draw() {
@@ -46,7 +46,7 @@ void initParticle() {
   LimitedParticle p = new LimitedParticle(width/2, 0, velX, velY, radius, clr, GRAVITY, sinkListener);
   p.friction = FRICTION;
   particles.push(p);
-  println("No. of particles: " + particles.length);
+  //println("No. of particles: " + particles.length);
 }
 
 void mousePressed() {

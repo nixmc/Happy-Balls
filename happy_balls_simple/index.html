@@ -1,56 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style type="text/css">
-    #content {
-        width: 1024px;
-        margin: auto;
-    }
-    .bucket-container {
-        margin: 0;
-        padding: 0;
-        width: 500px;
-        display: inline;
-        float: left;
-    }
-    canvas {
-        border-bottom: 1px solid;
-        border-left: 1px solid;
-        border-right: 1px solid;
-    }
-    button {
-        display: block;
-        width: 300px;
-        height: 60px;
-        margin: auto;
-        font-size: 20px;
-    }
-    </style>
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
     <script type="text/javascript" src="lib/processing-1.2.3.min.js"></script>
-    <script type="text/javascript">
-    var initSketch = function(sketchId) {
-        if (!window[sketchId]) {
-            window[sketchId] = Processing.getInstanceById(sketchId);
-        }
-        return window[sketchId];
-    };
-    
-    var dropBallIntoBucket = function(bucketId) {
-        var bucket = initSketch(bucketId);
-        bucket.initParticle();
-    };    
-    </script>
+		<script type="text/javascript" src="script/jquery.1.6.2.min.js"></script>
+		<script type="text/javascript" src="script/twitterlib.js"></script>
+		<script type="text/javascript" src="script/init.js"></script>
   </head>
   <body>
     <div id="content">
+			<div id="processing">
         <div class="bucket-container">
-            <button onclick="dropBallIntoBucket('happyBucket');">Put a ball in the happy bucket! :D</button>
             <canvas id="happyBucket" data-processing-sources="happy_balls_simple.js Floor.pde SinkListener.pde SinkListenerImpl.pde LimitedParticle.pde Particle.pde"></canvas>
         </div>
         <div class="bucket-container">
-            <button onclick="dropBallIntoBucket('unhappyBucket');">Put a ball in the unhappy bucket! :(</button>
             <canvas id="unhappyBucket" data-processing-sources="happy_balls_simple.js Floor.pde SinkListener.pde SinkListenerImpl.pde LimitedParticle.pde Particle.pde"></canvas>
         </div>
+				<div id="map">
+					
+				</div>
+			</div>
+			<div id="graphs">
+				<ul id="chunks">
+					
+				</ul>
+			</div>
+			
     </div>
   </body>
 </html>
