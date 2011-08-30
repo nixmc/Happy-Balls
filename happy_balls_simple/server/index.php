@@ -12,12 +12,15 @@ function ensure($condition, $error_message) {
 }
 
 class Application {
+    /**
+     * List of resources and available methods exposed by this application
+     */
     var $resources = array(
         'index' => array(
             'GET' => 'index'
         ),
         'happiness' => array(
-            'POST' => 'happiness'
+            'POST' => 'add_happiness'
         )
     );
     
@@ -83,7 +86,7 @@ class Application {
         echo "Hello world\n";
     }
     
-    private function happiness() {
+    private function add_happiness() {
         try {
             // Save happiness data...
             // We expect:
