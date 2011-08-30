@@ -84,8 +84,8 @@
                         // $ curl -i -d "location=1&happiness=42&unhappiness=0" http://happy-balls.local/server/happiness/
                         $.post("http://" + document.location.hostname + "/server/happiness/", {
                             location: location, 
-                            happiness: happiness, 
-                            unhappiness: unhappiness
+                            happiness: happinessIncrease, 
+                            unhappiness: unhappinessIncrease
                         });
                         
                         // Drop appropriate number of balls into buckets...
