@@ -3,6 +3,7 @@ body { margin: 0; padding: 0; font-family: helvetica;}
 .bucket-container { margin: 0; padding: 0; width: 280px; padding: 10px 40px; float: left; display: inline;}
 canvas { border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; width: 280px; height: 300px; }
 #processing { width: 724px;}
+#serial-container { position: relative; height: 0; width: 0; left: -99999px; }
 
 #graphs { width: 150px; height: 768px; overflow: hidden; }
 #graphs ul { padding: 0; }

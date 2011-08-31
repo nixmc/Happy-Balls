@@ -62,7 +62,7 @@ class Application {
     }
     
     function run() {
-        $this->args = explode('/', $_SERVER['PATH_INFO']);
+        $this->args = explode('/', array_key_exists('PATH_INFO', $_SERVER) ? $_SERVER['PATH_INFO'] : array());
         array_shift($this->args);
         $resource = array_shift($this->args);    
         $resource = $resource ? $resource : 'index';
