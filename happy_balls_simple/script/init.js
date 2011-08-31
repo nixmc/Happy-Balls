@@ -11,23 +11,19 @@ var dropBallIntoBucket = function(bucketId) {
 };
 
 $('document').ready(function(){  
-  addChunk(10,  15,   0);
-  addChunk(12,  1,    5);
-  addChunk(5,   7,    10);
-  addChunk(7,   5,    15);
-  addChunk(20,  15,   20);
-  addChunk(16,  10,   25);
-  addChunk(25,  20,   30);
-  addChunk(100, 100,  35);
-  addChunk(155, 65,   40);
-  addChunk(155, 65,   45);
-  addChunk(65,  155,  50);
-  addChunk(15,  45,   55);
-  addChunk(5,   45,   0);
+  var timer = setInterval(function(){ addChunk(hour_hapiness, hour_sadness); }, 300000);
 });
 
+// global variables to hold the incremental counts
 var hour_hapiness = 0;
 var hour_sadness = 0;
+
+var increment_chunk_count = function(happy, sad){
+  hour_hapiness = hour_hapiness + happy;
+  hour_sadness = hour_sadness + sad;
+  console.log("hour_sadness: " + hour_hapiness);
+  console.log("hour_sadness: " + hour_sadness);
+};
 
 var zero_pad = function(num,count)
 {
@@ -40,6 +36,7 @@ var zero_pad = function(num,count)
 
 var addChunk = function(happy, sad, time){
   time = time == null ? new Date : time;
+  
   if(happy == 0 && sad == 0){
     happy = 1;
     sad = 1;
@@ -78,6 +75,9 @@ var addChunk = function(happy, sad, time){
   }
   $chunks.prepend($new_li);
   $('#chunks li:first').animate({ opacity: 1.0, top: 0 }, 1000);
+  
+  hour_hapiness = 0;
+  hour_sadness = 0;
 };
 
 var serialityCallback = function(data) {
@@ -98,6 +98,7 @@ var serialityCallback = function(data) {
                         unhappinessIncrease = unhappiness - (result && result.unhappiness || 0);
                     console.log("happinessIncrease:", happinessIncrease);
                     console.log("unhappinessIncrease:", unhappinessIncrease);
+                    increment_chunk_count(happinessIncrease, unhappinessIncrease);
                     
                     // Record change...
                     putHappinessScore({
