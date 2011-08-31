@@ -5,8 +5,7 @@ class Pie {
   int r;
   float origin = -PI/2;
   boolean pulsing = false;
-  float rOffset = 0;
-  float originOffset = 0;
+  float rInc = 0;
   int baseFrame = 0;
   int pulseCount = 0;
   List<PieSlice> slices = new ArrayList<PieSlice>();
@@ -48,7 +47,7 @@ class Pie {
     // Draw the pie
     parent.noStroke();
     parent.ellipseMode(CENTER);
-    float start = origin + this.originOffset;
+    float start = origin;
     for (PieSlice slice : slices) {
       // What proportion of the pie is consumed by this slice?
       float proportion = slice.getValue() / total;
@@ -58,7 +57,7 @@ class Pie {
       
       // Draw the slice
       parent.fill(slice.getColor());
-      parent.arc(this.x, this.y, this.r + this.rOffset, this.r + this.rOffset, start, start + proportionRadians);
+      parent.arc(this.x, this.y, this.r + this.rInc, this.r + this.rInc, start, start + proportionRadians);
       
       // Update start position for next slice
       start += proportionRadians;
@@ -66,13 +65,10 @@ class Pie {
     
     if (pulsing) {
       this.pulseCount = (parent.frameCount - this.baseFrame) % 360;
-      float offset = parent.abs(parent.sin(parent.radians(this.pulseCount)));
-      this.rOffset = this.r * offset;
-      this.originOffset = this.origin/3 * offset;
+      this.rInc = this.r * parent.abs(parent.sin(parent.radians(this.pulseCount)));
       if (this.pulseCount == 180) {
         this.pulsing = false;
-        this.rOffset = 0;
-        this.originOffset = 0;
+        this.rInc = 0;
       }
     }
   }
