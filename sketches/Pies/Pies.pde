@@ -56,11 +56,9 @@ void drawPies() {
 }
 
 void mousePressed() {
-  pie = new Pie(this, mouseX, mouseY, 84);
-  int value = int(random(0, 100));
-  pie.addSlice(new PieSlice("Happy", value, color(239, 240, 56, 240)));
-  pie.addSlice(new PieSlice("Unhappy", 100 - value, color(176, 210, 235, 240)));
-  pies.add(pie);
+  // Grab a random pie, make it pulse
+  Pie pie = pies.get(int(random(0, pies.size())));
+  pie.pulse();
 }
 
 void keyPressed() {

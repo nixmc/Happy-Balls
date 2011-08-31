@@ -4,7 +4,10 @@ class Pie {
   int y;
   int r;
   float origin = -PI/2;
-  
+  boolean pulsing = false;
+  float rInc = 0;
+  int baseFrame = 0;
+  int pulseCount = 0;
   List<PieSlice> slices = new ArrayList<PieSlice>();
   
   Pie(PApplet parent, int xPos, int yPos, int radius) {
@@ -29,6 +32,11 @@ class Pie {
     return null;
   }
   
+  void pulse() {
+    this.pulsing = true;
+    this.baseFrame = parent.frameCount;
+  }
+  
   void draw() {    
     // Sum all the slices to arrive at total
     float total = 0;
@@ -49,10 +57,19 @@ class Pie {
       
       // Draw the slice
       parent.fill(slice.getColor());
-      parent.arc(this.x, this.y, this.r, this.r, start, start + proportionRadians);
+      parent.arc(this.x, this.y, this.r + this.rInc, this.r + this.rInc, start, start + proportionRadians);
       
       // Update start position for next slice
       start += proportionRadians;
+    }
+    
+    if (pulsing) {
+      this.pulseCount = (parent.frameCount - this.baseFrame) % 360;
+      this.rInc = this.r * parent.abs(parent.sin(parent.radians(this.pulseCount)));
+      if (this.pulseCount == 180) {
+        this.pulsing = false;
+        this.rInc = 0;
+      }
     }
   }
 }
