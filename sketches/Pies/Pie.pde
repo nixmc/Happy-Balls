@@ -38,7 +38,10 @@ class Pie {
     this.baseFrame = parent.frameCount;
   }
   
-  void draw() {    
+  void draw() {
+    // How many slices are there?
+    float numSlices = (float)slices.size();
+    
     // Sum all the slices to arrive at total
     float total = 0;
     for (PieSlice slice : slices) {
@@ -51,7 +54,7 @@ class Pie {
     float start = origin + this.originOffset;
     for (PieSlice slice : slices) {
       // What proportion of the pie is consumed by this slice?
-      float proportion = slice.getValue() / total;
+      float proportion = total == 0.0 ? 1.0 / numSlices : slice.getValue() / total;
       
       // Expressed in radians...
       float proportionRadians = proportion * 2 * PI;
