@@ -15,6 +15,11 @@ var updateLocation = function(location, happiness, unhappiness) {
     map.updatePie(location, happiness, unhappiness);
 };
 
+var updateLogo = function(happinessIncrease, unhappinessIncrease) {
+    var logo = initSketch("logo");
+    logo.incrementCounts(happinessIncrease, unhappinessIncrease);
+};
+
 $('document').ready(function(){  
   var timer = setInterval(function(){ addChunk(hour_hapiness, hour_sadness); }, 300000);
 });
@@ -121,7 +126,7 @@ var serialityCallback = function(data) {
                     updateLocation(location, happiness, unhappiness);
                     
                     // Update logo
-                    // TODO...
+                    updateLogo(happinessIncrease, unhappinessIncrease);
                     
                     // Send change to server...
                     // $ curl -i -d "location=1&happiness=42&unhappiness=0" http://happy-balls.local/server/happiness/

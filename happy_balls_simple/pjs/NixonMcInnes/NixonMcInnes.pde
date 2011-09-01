@@ -4,6 +4,8 @@ int happyColour = color(239, 240, 56);
 int sadColour = color(176, 210, 235);
 int fromColour = happyColour;
 int toColour = sadColour;
+int happinessCount = 0;
+int unhappinessCount = 0;
 float lerpAmt = 0.0;
 boolean autoLerp = false;
 
@@ -31,7 +33,14 @@ void draw() {
 }
 
 void setLerpAmt(float amt) {
-    lerpAmt = amt;
+  lerpAmt = amt;
+}
+
+void incrementCounts(int happinessIncrease, int unhappinessIncrease) {
+  happinessCount += happinessIncrease;
+  unhappinessCount += unhappinessIncrease;
+  int total = happinessCount + unhappinessCount;
+  lerpAmt = (float)(unhappinessCount / total);
 }
 
 void mouseClicked() {
