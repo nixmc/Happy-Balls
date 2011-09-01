@@ -12,13 +12,13 @@
         height: 728px;
         margin: auto;
         padding: 20px;
-        background-color: #aaa;
+        background-color: #eee;
     }
     
     #main {
         width: 558px;
         height: 688px;
-        background-color: #eee;
+        background-color: #fff;
         float: left;
         margin-right: 10px;
         padding: 20px;
@@ -27,7 +27,7 @@
     #secondary {
         width: 326px;
         height: 688px;
-        background-color: #eee;
+        background-color: #fff;
         float: left;
         margin-left: 10px;
         padding: 20px;
@@ -37,18 +37,18 @@
         display: inline;
     }
     
-    #happy-bucket, #unhappy-bucket {
+    #happyBucket, #unhappyBucket {
         float: left;
         margin: 0;
         padding: 0;
         display: inline;
     }
     
-    #happy-bucket {
+    #happyBucket {
         margin-right: 10px;
     }
     
-    #unhappy-bucket {
+    #unhappyBucket {
         margin-left: 10px;
     }
     
@@ -74,8 +74,10 @@
 <body>
     <div id="content">
         <div id="main">
-            <img id="happy-bucket" width="269" src="http://placehold.it/269x340/D7DE51&text=Happy+bucket" />
-            <img id="unhappy-bucket" width="269" src="http://placehold.it/269x340/00B1C5&text=Unhappy+bucket" />
+            <!-- <img id="happy-bucket" width="269" src="http://placehold.it/269x340/D7DE51&text=Happy+bucket" /> -->
+            <!-- <img id="unhappy-bucket" width="269" src="http://placehold.it/269x340/00B1C5&text=Unhappy+bucket" /> -->
+            <canvas id="happyBucket" data-processing-sources="pjs/HappyBalls/HappyBalls.pde pjs/HappyBalls/Floor.pde pjs/HappyBalls/SinkListener.pde pjs/HappyBalls/SinkListenerImpl.pde pjs/HappyBalls/LimitedParticle.pde pjs/HappyBalls/Particle.pde"></canvas>
+            <canvas id="unhappyBucket" data-processing-sources="pjs/HappyBalls/HappyBalls.pde pjs/HappyBalls/Floor.pde pjs/HappyBalls/SinkListener.pde pjs/HappyBalls/SinkListenerImpl.pde pjs/HappyBalls/LimitedParticle.pde pjs/HappyBalls/Particle.pde"></canvas>
             <!-- <img id="map" src="http://placehold.it/558x328&text=Map+of+the+Dome" /> -->
             <canvas id="map" data-processing-sources="pjs/Pies/Pies.pde pjs/Pies/Pie.pde pjs/Pies/PieSlice.pde"></canvas>
         </div>
