@@ -36,5 +36,4 @@ void setLerpAmt(float amt) {
 
 void mouseClicked() {
     lerpAmt = random(1);
-    println(lerpAmt);
 }

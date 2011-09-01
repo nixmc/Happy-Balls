@@ -1,4 +1,4 @@
-/* @pjs preload="data/dome.png"; */
+/* @pjs preload="/pjs/Pies/data/dome.png"; */
 PImage img;
 Pie pie;
 List<Pie> pies = new ArrayList<Pie>();
@@ -16,7 +16,7 @@ int[][] coords = {
 void setup() {
   size(558, 328);
   smooth();
-  img = loadImage("data/dome.png");
+  img = loadImage("/pjs/Pies/data/dome.png");
   for (int i = 0; i < coords.length; i++) {
       pie = new Pie(this, coords[i][0], coords[i][1], 84);
       pie.addSlice(new PieSlice("Happy", 0, color(239, 240, 56, 240)));

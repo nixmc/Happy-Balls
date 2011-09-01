@@ -20,7 +20,7 @@ class Pie {
   }
   
   void addSlice(PieSlice slice) {
-    println(slice.label + ": " + slice.getValue());
+    // println(slice.label + ": " + slice.getValue());
     slices.add(slice);
   }
   

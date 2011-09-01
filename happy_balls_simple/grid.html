@@ -69,17 +69,20 @@
         display: inline;
     }
     </style>
+    <script type="text/javascript" src="script/processing-1.3.0.min.js"></script>
 </head>
 <body>
     <div id="content">
         <div id="main">
             <img id="happy-bucket" width="269" src="http://placehold.it/269x340/D7DE51&text=Happy+bucket" />
             <img id="unhappy-bucket" width="269" src="http://placehold.it/269x340/00B1C5&text=Unhappy+bucket" />
-            <img id="map" src="http://placehold.it/558x328&text=Map+of+the+Dome" />
+            <!-- <img id="map" src="http://placehold.it/558x328&text=Map+of+the+Dome" /> -->
+            <canvas id="map" data-processing-sources="pjs/Pies/Pies.pde pjs/Pies/Pie.pde pjs/Pies/PieSlice.pde"></canvas>
         </div>
         <div id="secondary">
             <img id="timeline" src="http://placehold.it/326x524&text=Timeline" />
-            <img id="logo" src="http://placehold.it/326x144&text=NM+Logo">
+            <!-- <img id="logo" src="http://placehold.it/326x144&text=NM+Logo"> -->
+            <canvas id="logo" data-processing-sources="pjs/NixonMcInnes/NixonMcInnes.pde"></canvas>
         </div>
     </div>
 </body>
