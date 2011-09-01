@@ -19,9 +19,8 @@ void setup() {
   img = loadImage("data/dome.png");
   for (int i = 0; i < coords.length; i++) {
       pie = new Pie(this, coords[i][0], coords[i][1], 84);
-      int value = int(random(0, 100));
-      pie.addSlice(new PieSlice("Happy", value, color(239, 240, 56, 240)));
-      pie.addSlice(new PieSlice("Unhappy", 100 - value, color(176, 210, 235, 240)));
+      pie.addSlice(new PieSlice("Happy", 0, color(239, 240, 56, 240)));
+      pie.addSlice(new PieSlice("Unhappy", 0, color(176, 210, 235, 240)));
       pies.add(pie);
   }
 }
@@ -83,4 +82,12 @@ void keyPressed() {
   }
   
   println(offset);
+}
+
+void updatePie(int location, int happiness, int unhappiness) {
+    Pie pie = pies.get(location - 1);
+    PieSlice happySlice = pie.getSliceByLabel("Happy");
+    PieSlice unhappySlice = pie.getSliceByLabel("Unappy");
+    happySlice.setValue((float)happiness);
+    unhappySlice.setValue((float)unhappiness);
 }
