@@ -10,9 +10,10 @@ var particles = [];
 SinkListener sinkListener = new SinkListenerImpl(); 
 boolean addParticles = false;
 int addParticleRate = externals.canvas.id == "happyBucket" ? 5 : 15;
+boolean smiley = externals.canvas.id == "happyBucket" ? true : false;
 
 void setup() {
-  size(280, 300);
+  size(269, 340);
   noStroke();
   smooth();
   for (int i = 0; i < num; i++) {
@@ -38,6 +39,33 @@ void draw() {
   if (addParticles && frameCount % addParticleRate == 0) {
     initParticle();
   }
+  
+  drawFace(smiley);
+}
+
+void drawFace(boolean smiling) {
+  pushStyle();
+    fill(66, 200);
+    noStroke();
+    rectMode(CENTER);
+    rect(width * .3, height/2 - 50, 39, 39);
+    rect(width * .7, height/2 - 50, 39, 39);
+      pushStyle();
+      fill(255);
+      rect(width * .3 + 11, height/2 - 60, 8, 8);
+      rect(width * .7 + 11, height/2 - 60, 8, 8);
+      popStyle();
+    noFill();
+    stroke(66, 200);
+    strokeCap(SQUARE);
+    strokeWeight(18);
+    ellipseMode(CENTER);
+    if (smiling) {
+      arc(width/2, height/2 - 50, min(width, height), min(width, height), PI/4, 3*PI/4);
+    } else {
+      arc(width/2, height, min(width, height), min(width, height), PI + PI/4, PI + 3*PI/4);
+    }
+  popStyle();
 }
 
 void initParticle() {
