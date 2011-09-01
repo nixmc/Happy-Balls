@@ -87,7 +87,8 @@ void keyPressed() {
 void updatePie(int location, int happiness, int unhappiness) {
     Pie pie = pies.get(location - 1);
     PieSlice happySlice = pie.getSliceByLabel("Happy");
-    PieSlice unhappySlice = pie.getSliceByLabel("Unappy");
+    PieSlice unhappySlice = pie.getSliceByLabel("Unhappy");
     happySlice.setValue((float)happiness);
     unhappySlice.setValue((float)unhappiness);
+    pie.pulse();
 }

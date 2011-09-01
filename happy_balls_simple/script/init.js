@@ -10,6 +10,11 @@ var dropBallIntoBucket = function(bucketId) {
     bucket.initParticle();
 };
 
+var updateLocation = function(location, happiness, unhappiness) {
+    var map = initSketch("map");
+    map.updatePie(location, happiness, unhappiness);
+};
+
 $('document').ready(function(){  
   var timer = setInterval(function(){ addChunk(hour_hapiness, hour_sadness); }, 300000);
 });
@@ -111,6 +116,12 @@ var serialityCallback = function(data) {
                         },
                         onError: console.log
                     });
+                    
+                    // Update location pie
+                    updateLocation(location, happiness, unhappiness);
+                    
+                    // Update logo
+                    // TODO...
                     
                     // Send change to server...
                     // $ curl -i -d "location=1&happiness=42&unhappiness=0" http://happy-balls.local/server/happiness/
