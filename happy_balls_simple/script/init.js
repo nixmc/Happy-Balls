@@ -22,18 +22,7 @@ var updateLogo = function(happinessIncrease, unhappinessIncrease) {
 
 $('document').ready(function(){  
   var timer = setInterval(function(){ addChunk(hour_hapiness, hour_sadness); }, 300000);
-  addChunk(5, 10);
-  addChunk(10, 5);
-  addChunk(25, 10);
-  addChunk(5, 10);
-  addChunk(5, 10);
-  addChunk(10, 5);
-  addChunk(25, 10);
-  addChunk(5, 10);
-  addChunk(5, 10);
-  addChunk(10, 5);
-  addChunk(25, 10);
-  addChunk(5, 10);
+  
 });
 
 $(window).bind("hashchange", function(){
@@ -80,7 +69,7 @@ var addChunk = function(happy, sad, time){
   var $chunks = $('#chunks');
   var total = happy + sad;
   
-  var chunks_width = parseInt($chunks.width()) - 37; // hardcoded padding for clock?
+  var chunks_width = parseInt($chunks.width()) - 41; // hardcoded padding for clock?
   var one_percent = chunks_width / total;
   var happy_percent = Math.floor(happy * one_percent);
   var sad_percent = Math.floor(sad * one_percent);
@@ -147,6 +136,7 @@ var serialityCallback = function(data) {
                     });
                     
                     // Update location pie
+                    console.log("Updating location", location, happiness, unhappiness)
                     updateLocation(location, happiness, unhappiness);
                     
                     // Update logo
