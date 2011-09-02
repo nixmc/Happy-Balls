@@ -22,7 +22,7 @@ var updateLogo = function(happinessIncrease, unhappinessIncrease) {
 
 $('document').ready(function(){  
   var timer = setInterval(function(){ addChunk(hour_hapiness, hour_sadness); }, 300000);
-  
+  fetch_tweets();
 });
 
 $(window).bind("hashchange", function(){
@@ -164,4 +164,17 @@ var serialityCallback = function(data) {
             onError: console.log
         });
     }
+};
+
+var last_tweet_id = "0";
+var fetch_tweets = function(){
+  twitterlib.search('#happballs', { filter: 'happy OR sad OR ":)" OR ":("', since_id: last_tweet_id }, function (tweets, options) {
+    last_tweet_id = tweets[0].id_str;
+    for(var x = 0; x < tweets.length; x = x + 1){
+      var tweet = tweets[x];
+      console.log(tweet.created_at + " : " + tweet.id);
+      if(tweet.)
+    }
+  });
+
 };
