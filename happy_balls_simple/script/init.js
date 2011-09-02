@@ -10,9 +10,9 @@ var dropBallIntoBucket = function(bucketId) {
     bucket.initParticle();
 };
 
-var updateLocation = function(location, happiness, unhappiness) {
+var updateLocation = function(location, happinessIncrease, unhappinessIncrease) {
     var map = initSketch("map");
-    map.updatePie(location, happiness, unhappiness);
+    map.updatePie(location, happinessIncrease, unhappinessIncrease);
 };
 
 var updateLogo = function(happinessIncrease, unhappinessIncrease) {
@@ -136,8 +136,8 @@ var serialityCallback = function(data) {
                     });
                     
                     // Update location pie
-                    console.log("Updating location", location, happiness, unhappiness)
-                    updateLocation(location, happiness, unhappiness);
+                    // console.log("Updating location", location, happinessIncrease, unhappinessIncrease)
+                    updateLocation(location, happinessIncrease, unhappinessIncrease);
                     
                     // Update logo
                     updateLogo(happinessIncrease, unhappinessIncrease);
