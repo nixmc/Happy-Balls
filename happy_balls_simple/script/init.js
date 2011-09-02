@@ -24,6 +24,18 @@ $('document').ready(function(){
   var timer = setInterval(function(){ addChunk(hour_hapiness, hour_sadness); }, 300000);
 });
 
+$(window).bind("hashchange", function(){
+    var hash = document.location.hash,
+        action = hash.substr(1),
+        actions = {
+            "!truncate-db" : truncateDB,
+            "!foo" : (function(){console.log("bar");})
+        };
+    if (action in actions) {
+        actions[action]();
+    }
+});
+
 // global variables to hold the incremental counts
 var hour_hapiness = 0;
 var hour_sadness = 0;
