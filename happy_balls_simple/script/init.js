@@ -173,7 +173,9 @@ var fetch_tweets = function(){
     for(var x = 0; x < tweets.length; x = x + 1){
       var tweet = tweets[x];
       console.log(tweet.created_at + " : " + tweet.id);
-      if(tweet.)
+      var re = new RegExp("\\w+");  
+      var re = /\w+/;
+      //if(tweet.text)
     }
   });
 
