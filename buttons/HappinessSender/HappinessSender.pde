@@ -1,12 +1,20 @@
+#define FDMAX 255
+
 #include <VirtualWire.h>
 #include <EEPROM.h> //Needed to access the eeprom read write functions
 #include <Bounce.h> //Digital input debouncing
 
 #define happyLoc 0
 #define sadLoc 2
-#define happyPin 2
-#define sadPin 3
-#define happyLed 5
+#define happyPin 1
+#define sadPin 2 // WAS 3
+
+#define sadGreen 7
+#define sadBlue 8
+#define sadRed 6
+#define happyGreen 10
+#define happyBlue 11
+#define happyRed 9
 
 #define uintMax 65535
 
@@ -29,7 +37,14 @@ Bounce sadBouncer = Bounce(sadPin, 400);
 
 void setup()
 {
-  Serial.begin(9600);
+  pinMode(happyRed, OUTPUT);
+  pinMode(happyGreen, OUTPUT);
+  pinMode(happyBlue, OUTPUT);
+  pinMode(sadRed, OUTPUT);
+  pinMode(sadGreen, OUTPUT);
+  pinMode(sadBlue, OUTPUT);
+  
+  //Serial.begin(9600);
 
   //Transmitter setup
   vw_set_tx_pin(txPin);
@@ -53,29 +68,89 @@ void setup()
   pinMode(sadPin, INPUT);
   digitalWrite(sadPin, HIGH);
   
+  // Startup colors
+  digitalWrite(happyRed, HIGH);
+  digitalWrite(sadRed, HIGH);
+  delay(1000);
+  digitalWrite(happyRed, LOW);
+  digitalWrite(sadRed, LOW);
+  digitalWrite(happyGreen, HIGH);
+  digitalWrite(sadGreen, HIGH);
+  delay(1000);
+  digitalWrite(happyGreen, LOW);
+  digitalWrite(sadGreen, LOW);
+  digitalWrite(happyBlue, HIGH);
+  digitalWrite(sadBlue, HIGH);
+  delay(1000);
+  digitalWrite(happyBlue, LOW);
+  digitalWrite(sadBlue, LOW);
+  delay(1000);
+  
 }
 
 void loop() {
+  
   readButtons();
   sendValues();
+  
+  digitalWrite(happyRed, HIGH);
+  digitalWrite(happyGreen, HIGH);
+  digitalWrite(sadBlue, HIGH);
+  
 }
 
 void readButtons(){
   happyBouncer.update();
   sadBouncer.update();
 
-  if(happyBouncer.risingEdge() || happyBouncer.fallingEdge()){
+  //if(happyBouncer.risingEdge() || happyBouncer.fallingEdge()){
+  if(happyBouncer.risingEdge()){
     happy++;
     EEPROMWriteInt(happyLoc, happy);
-    Serial.print("happy++ ");
-    Serial.println(happy);
-    fadeOut(happyLed, 4);
+    
+    sendValues();
+    
+    digitalWrite(happyRed, LOW);
+    digitalWrite(happyGreen, LOW);
+    digitalWrite(happyBlue, LOW);
+    digitalWrite(sadRed, LOW);
+    digitalWrite(sadGreen, LOW);
+    digitalWrite(sadBlue, LOW);
+    
+    for (int t = 0; t < 8; t++) {
+      digitalWrite(happyRed, HIGH);
+      digitalWrite(happyGreen, HIGH);
+      delay(200);
+      digitalWrite(happyRed, LOW);
+      digitalWrite(happyGreen, LOW);
+      delay(200);
+    }
+    
+    //Serial.print("happy++ ");
+    //Serial.println(happy);
   }
   if(sadBouncer.risingEdge()){
     sad++;
     EEPROMWriteInt(sadLoc, sad);
-    Serial.print("sad++ ");
-    Serial.println(sad);
+    
+    sendValues();
+    
+    digitalWrite(happyRed, LOW);
+    digitalWrite(happyGreen, LOW);
+    digitalWrite(happyBlue, LOW);
+    digitalWrite(sadRed, LOW);
+    digitalWrite(sadGreen, LOW);
+    digitalWrite(sadBlue, LOW);
+    
+    for (int t = 0; t < 8; t++) {
+      digitalWrite(sadBlue, HIGH);
+      delay(200);
+      digitalWrite(sadBlue, LOW);
+      delay(200);
+    }
+    
+    //Serial.print("sad++ ");
+    //Serial.println(sad);
   }
 }
 
@@ -88,12 +163,12 @@ void sendValues(){
     previousMillis = currentMillis;
     millisBetweenSends = random(5000, 10000); //between 5 and 10 seconds
     //millisBetweenSends = 1000;
-      Serial.print("Location: ");
-      Serial.print(location);
-      Serial.print(" happy: ");
-      Serial.print(happy);
-      Serial.print(" sad: ");
-      Serial.println(sad);
+      //Serial.print("Location: ");
+      //Serial.print(location);
+      //Serial.print(" happy: ");
+      //Serial.print(happy);
+      //Serial.print(" sad: ");
+      //Serial.println(sad);
     
     uint8_t packet[] = {(uint8_t)location, (uint8_t)happy, (uint8_t)(happy >> 8), (uint8_t)sad, (uint8_t)(sad >> 8)};
     vw_send(packet, 5);
@@ -118,11 +193,4 @@ unsigned int EEPROMReadInt(int p_address)
   byte highByte = EEPROM.read(p_address + 1);
 
   return ((lowByte << 0) & 0xFF) + ((highByte << 8) & 0xFF00);
-}
-
-void fadeOut(int pin, int del){
-  for(int i = 255; i >= 0; i--){
-    analogWrite(pin, i);
-    delay(del);
-  }
 }
