@@ -35,8 +35,7 @@ unsigned int sad;
 Bounce happyBouncer = Bounce(happyPin, 400);
 Bounce sadBouncer = Bounce(sadPin, 400);
 
-void setup()
-{
+void setup() {
   pinMode(happyRed, OUTPUT);
   pinMode(happyGreen, OUTPUT);
   pinMode(happyBlue, OUTPUT);
@@ -86,17 +85,17 @@ void setup()
   digitalWrite(sadBlue, LOW);
   delay(1000);
   
+  sendValues();
 }
 
 void loop() {
   
   readButtons();
-  sendValues();
+  // sendValues(); // only send when a button has been pressed
   
   digitalWrite(happyRed, HIGH);
   digitalWrite(happyGreen, HIGH);
   digitalWrite(sadBlue, HIGH);
-  
 }
 
 void readButtons(){
@@ -155,24 +154,31 @@ void readButtons(){
 }
 
 
+void sendValues(){  
+  uint8_t packet[] = {(uint8_t)location, (uint8_t)happy, (uint8_t)(happy >> 8), (uint8_t)sad, (uint8_t)(sad >> 8)};
+  vw_send(packet, 5);
+  vw_wait_tx(); // Wait until the whole message is gone
+}
+
 unsigned long previousMillis = 0;
 unsigned long millisBetweenSends = 0; //send on startup
-void sendValues(){
+  
+  
+void sendValuesAfterDelay(){
   unsigned long currentMillis = millis();
-  if(currentMillis - previousMillis > millisBetweenSends) {
+  if (currentMillis - previousMillis > millisBetweenSends) {
     previousMillis = currentMillis;
     millisBetweenSends = random(5000, 10000); //between 5 and 10 seconds
     //millisBetweenSends = 1000;
-      //Serial.print("Location: ");
-      //Serial.print(location);
-      //Serial.print(" happy: ");
-      //Serial.print(happy);
-      //Serial.print(" sad: ");
-      //Serial.println(sad);
     
-    uint8_t packet[] = {(uint8_t)location, (uint8_t)happy, (uint8_t)(happy >> 8), (uint8_t)sad, (uint8_t)(sad >> 8)};
-    vw_send(packet, 5);
-    vw_wait_tx(); // Wait until the whole message is gone
+    //Serial.print("Location: ");
+    //Serial.print(location);
+    //Serial.print(" happy: ");
+    //Serial.print(happy);
+    //Serial.print(" sad: ");
+    //Serial.println(sad);
+    
+    sendValues();
   }
 }
 
