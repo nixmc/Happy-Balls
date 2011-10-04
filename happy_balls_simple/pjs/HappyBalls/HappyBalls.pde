@@ -45,6 +45,14 @@ void draw() {
   }
   
   // drawFace(smiley);
+  pushStyle();
+    stroke(66, 200);
+    strokeCap(SQUARE);
+    strokeWeight(6);
+    line(0,0,0,height);
+    line(0,height,width,height);
+    line(width, 0, width, height);
+  popStyle();
   image(img);
 }
 

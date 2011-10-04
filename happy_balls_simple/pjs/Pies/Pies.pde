@@ -27,7 +27,8 @@ void setup() {
 }
 
 void draw() {
-  drawSchematic();
+  // drawSchematic();
+  image(img);
   drawPies();
 }
 
