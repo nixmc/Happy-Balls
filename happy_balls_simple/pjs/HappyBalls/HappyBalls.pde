@@ -1,3 +1,5 @@
+/* @pjs preload="/pjs/HappyBalls/data/happy.png" */
+/* @pjs preload="/pjs/HappyBalls/data/unhappy.png" */
 int num = 0;
 color happy = color(239, 240, 56);
 color unhappy = color(176, 210, 235);
@@ -11,6 +13,7 @@ SinkListener sinkListener = new SinkListenerImpl();
 boolean addParticles = false;
 int addParticleRate = externals.canvas.id == "happyBucket" ? 5 : 15;
 boolean smiley = externals.canvas.id == "happyBucket" ? true : false;
+PImage img;
 
 void setup() {
   size(269, 340);
@@ -20,6 +23,7 @@ void setup() {
     initParticle();
   }
   //println("Running on:  " + externals.canvas.id);
+  img = loadImage(smiley ? "/pjs/HappyBalls/data/happy.png" : "/pjs/HappyBalls/data/unhappy.png");
 }
 
 void draw() {
@@ -40,7 +44,8 @@ void draw() {
     initParticle();
   }
   
-  drawFace(smiley);
+  // drawFace(smiley);
+  image(img);
 }
 
 void drawFace(boolean smiling) {
