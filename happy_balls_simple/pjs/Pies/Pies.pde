@@ -1,23 +1,40 @@
+/* @pjs preload="/pjs/Pies/data/cogapp.png"; */
 /* @pjs preload="/pjs/Pies/data/dome.png"; */
+/* @pjs preload="/pjs/Pies/data/nm.png"; */
 PImage img;
 Pie pie;
 List<Pie> pies = new ArrayList<Pie>();
 boolean autoUpdate = false;
 int offset = 25;
 
+// Dome coords
+// int[][] coords = {
+//   {77, 61},
+//   {259, 61},
+//   {68, 176},
+//   {175, 260},
+//   {287, 260},
+//   {513, 283}
+// };
+
+// NM coords
 int[][] coords = {
-  {77, 61},
-  {259, 61},
-  {68, 176},
-  {175, 260},
-  {287, 260},
-  {513, 283}
+  {115, 86},
+  {468, 86}
 };
+
+// Cogapp coords
+// int[][] coords = {
+//   {77, 61},
+//   {259, 61},
+//   {68, 176},
+//   {175, 260}
+// };
 
 void setup() {
   size(558, 328);
   smooth();
-  img = loadImage("/pjs/Pies/data/dome.png");
+  img = loadImage("/pjs/Pies/data/" + externals.canvas.getAttribute("data-bg-image"));
   for (int i = 0; i < coords.length; i++) {
       pie = new Pie(this, coords[i][0], coords[i][1], 84);
       pie.addSlice(new PieSlice("Happy", 0, color(239, 240, 56, 240)));
@@ -28,7 +45,9 @@ void setup() {
 
 void draw() {
   // drawSchematic();
-  image(img);
+  background(255);
+  imageMode(CENTER);
+  image(img, width/2, height/2);
   drawPies();
 }
 
@@ -54,7 +73,7 @@ void drawSchematic() {
 void drawPies() {
   for (Pie pie : pies) {
     pie.draw();
-  }  
+  }
 }
 
 void mousePressed() {
@@ -66,24 +85,25 @@ void mousePressed() {
 }
 
 void keyPressed() {
-//  if (keyCode == LEFT) {
-//    pie.x -= 1;
-//  } else if (keyCode == RIGHT) {
-//    pie.x += 1;
-//  } else if (keyCode == UP) {
-//    pie.y -= 1;
-//  } else if (keyCode == DOWN) {
-//    pie.y += 1;
-//  }
-//  
-//  println("x: " + pie.x + ", y: " + pie.y);
-  if (keyCode == UP) {
-    offset++;
+  pie = pies.get(0);
+  if (keyCode == LEFT) {
+   pie.x -= 1;
+  } else if (keyCode == RIGHT) {
+   pie.x += 1;
+  } else if (keyCode == UP) {
+   pie.y -= 1;
   } else if (keyCode == DOWN) {
-    offset--;
+   pie.y += 1;
   }
-  
-  println(offset);
+
+  println("x: " + pie.x + ", y: " + pie.y);
+  // if (keyCode == UP) {
+  //   offset++;
+  // } else if (keyCode == DOWN) {
+  //   offset--;
+  // }
+  // 
+  // println(offset);
 }
 
 void updatePie(int location, int happiness, int unhappiness) {

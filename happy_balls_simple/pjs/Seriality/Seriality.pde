@@ -1,5 +1,5 @@
 var serial;
-var port = "/dev/cu.usbmodem411";
+var port = "/dev/cu.usbmodemfa131";
 
 var destroy = function() {
     if (serial && serial.end) {

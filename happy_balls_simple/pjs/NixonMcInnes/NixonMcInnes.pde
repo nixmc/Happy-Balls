@@ -15,6 +15,7 @@ void setup() {
   nmFont = loadFont("Rockwell Bold");
   taglineFont = loadFont("Cooper Black");
   smooth();
+  colorMode(HSB);
 }
 
 void draw() {
