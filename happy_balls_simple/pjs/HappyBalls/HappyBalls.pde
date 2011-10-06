@@ -7,8 +7,8 @@ color clr = externals.canvas.id == "happyBucket" ? happy : unhappy;
 float radius = 40;
 float GRAVITY = 9.8 / frameRate;
 float FRICTION = 0.4;
-// List<LimitedParticle> particles = new ArrayList<LimitedParticle>();
-var particles = [];
+List<LimitedParticle> particles = new ArrayList<LimitedParticle>();
+// var particles = [];
 SinkListener sinkListener = new SinkListenerImpl(); 
 boolean addParticles = false;
 int addParticleRate = externals.canvas.id == "happyBucket" ? 5 : 15;
@@ -30,12 +30,12 @@ void draw() {
   fill(255);
   rect(0, 0, width, height);
   
-  particles.forEach(function(p) {
+  for (Particle p : particles) {
     if (!p.sunk) {
       p.update();
       p.display();
-    }    
-  });
+    }
+  }
   
   fill(clr);
   rect(0, Floor.y, width, height - Floor.y);
@@ -90,7 +90,7 @@ void initParticle() {
   float velY = 0;//random(6, 6);
   LimitedParticle p = new LimitedParticle(width/2, 0, velX, velY, radius, clr, GRAVITY, sinkListener);
   p.friction = FRICTION;
-  particles.push(p);
+  particles.add(p);
   //println("No. of particles: " + particles.length);
 }
 

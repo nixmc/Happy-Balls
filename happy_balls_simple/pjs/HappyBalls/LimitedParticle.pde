@@ -49,5 +49,9 @@ class LimitedParticle extends Particle {
     if (!sunk && sinkListener != null) {
       sinkListener.sinking(this);
     }
+    
+    if (sunk && sinkListener != null) {
+      sinkListener.sunk(this);
+    }
   }
 }
