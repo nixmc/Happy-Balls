@@ -18,18 +18,18 @@ int offset = 25;
 // };
 
 // NM coords
-int[][] coords = {
-  {115, 86},
-  {468, 86}
-};
+// int[][] coords = {
+//   {115, 86},
+//   {468, 86}
+// };
 
 // Cogapp coords
-// int[][] coords = {
-//   {77, 61},
-//   {259, 61},
-//   {68, 176},
-//   {175, 260}
-// };
+int[][] coords = {
+	{153, 207}, // welcome, 1
+	{392, 190}, // TV, 2
+	{270, 90}, // ???, 3
+	{514, 285} // Twitter
+};
 
 void setup() {
   size(558, 328);
@@ -85,7 +85,7 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  pie = pies.get(0);
+  pie = pies.get(3);
   if (keyCode == LEFT) {
    pie.x -= 1;
   } else if (keyCode == RIGHT) {

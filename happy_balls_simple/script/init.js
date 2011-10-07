@@ -11,6 +11,7 @@ var dropBallIntoBucket = function(bucketId) {
 };
 
 var updateLocation = function(location, happinessIncrease, unhappinessIncrease) {
+    console.log("hallo");
     var map = initSketch("map");
     map.updatePie(location, happinessIncrease, unhappinessIncrease);
 };
@@ -23,6 +24,7 @@ var updateLogo = function(happinessIncrease, unhappinessIncrease) {
 $('document').ready(function(){  
   var timer = setInterval(function(){ addChunk(hour_hapiness, hour_sadness); }, 300000);
   // fetch_tweets();
+  var tweets_timer = setInterval(function(){ fetch_tweets(); }, 10000);
 });
 
 $(window).bind("hashchange", function(){
@@ -44,8 +46,8 @@ var hour_sadness = 0;
 var increment_chunk_count = function(happy, sad){
   hour_hapiness = hour_hapiness + happy;
   hour_sadness = hour_sadness + sad;
-  console.log("hour_sadness: " + hour_hapiness);
-  console.log("hour_sadness: " + hour_sadness);
+  //console.log("hour_sadness: " + hour_hapiness);
+  //console.log("hour_sadness: " + hour_sadness);
 };
 
 var zero_pad = function(num,count) {
@@ -164,17 +166,38 @@ var serialityCallback = function(data) {
         });
     }
 };
-
+//http://search.twitter.com/search.json?q=%23happybuttons&page=1&rpp=100&&result_type=recent&callback=twitterlib1317898648821
 var last_tweet_id = "0";
 var fetch_tweets = function() {
-  twitterlib.search('#happballs', { filter: 'happy OR sad OR ":)" OR ":("', since_id: last_tweet_id }, function (tweets, options) {
-    last_tweet_id = tweets[0].id_str;
-    for(var x = 0; x < tweets.length; x = x + 1){
-      var tweet = tweets[x];
-      console.log(tweet.created_at + " : " + tweet.id);
-      var re = new RegExp("\\w+");  
-      var re = /\w+/;
-      //if(tweet.text)
+  twitterlib.search('#happybuttons', { filter: 'happy OR sad OR unhappy OR ":)" OR ":(" OR ":-)" OR ":-("', since: last_tweet_id }, function (tweets, options) {
+    console.log(last_tweet_id);
+    console.log(tweets);
+    if(tweets.length > 0){
+      last_tweet_id = tweets[0].id_str;
+      for(var x = 0; x < tweets.length; x = x + 1){
+        var tweet = tweets[x];
+        console.log(tweet.created_at + " : " + tweet.id_str);
+        //var re = new RegExp("");  
+        // match unhappy
+        var re = /(:-?\(|sad|unhappy)/im;
+        var result = re.exec(tweet.text);
+        var sad_count = 0;
+        var happy_count = 0;
+        if( result != null && result.length > 0 ){
+          console.log("matched");
+          //updateLocation(4, 0, 1);
+          sad_count = sad_count + 1;
+        }
+        
+        // match happy
+        re = /(:-?\)|happy)/im;
+        result = re.exec(tweet.text);
+        if( result != null && result.length > 0 ){
+          console.log("matched happy");
+          happy_count = happy_count + 1;
+        }
+        serialityCallback("Location: 4 happy: " + happy_count + " sad: " + sad_count);
+      }
     }
   });
 
